@@ -1,8 +1,6 @@
 package com.example.JWTSecurity.security;
 
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -34,19 +32,21 @@ public class JwtUtil {
                 .compact();
     }
 
-    public String extractEmail(String token){
+    public Claims extractAllClaims(String token){
         return Jwts.parserBuilder()
                 .setSigningKey(getSigningKey())
                 .build()
                 .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
+                .getBody();
     }
 
-    public boolean validateToken (String token){
+    public String extractEmail (String token){
+        return extractAllClaims(token).getSubject();
+    }
+
+    public boolean validateToken(String token){
         try{
-            Jwts.parserBuilder().setSigningKey(getSigningKey()).build()
-                    .parseClaimsJws(token);
+            extractAllClaims(token);
             return true;
         }catch (JwtException e){
             return false;

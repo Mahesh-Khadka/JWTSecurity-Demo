@@ -33,8 +33,10 @@ public SecurityConfig(JwtAuthFilter jwtAuthFilter){
         http
                 .csrf(csrf -> csrf.disable()) // updated lambda-based syntax
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers( "/login.html","/home.html","/admin/**", "/AdminDashboard.html", "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers( "/login.html","/home.html", "/css/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

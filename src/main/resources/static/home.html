@@ -23,7 +23,7 @@
            class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl shadow hover:bg-blue-700 transition duration-300">
             Profile
         </a>
-        <a href="login.html"
+        <a href="login.html" id="logout-btn"
            class="px-6 py-3 bg-red-500 text-white font-semibold rounded-xl shadow hover:bg-red-600 transition duration-300">
             Logout
         </a>
@@ -36,14 +36,18 @@
 </footer>
 
 <script>
-    // Show content after JWT validation
     document.addEventListener("DOMContentLoaded", () => {
         const token = localStorage.getItem("jwtToken");
-        if (token) {
-            document.getElementById("main-content").style.display = "block";
-        } else {
+        if (!token) {
             window.location.href = "login.html";
+            return;
         }
+        document.getElementById("main-content").style.display = "block";
+
+        // Logout functionality
+        document.getElementById("logout-btn").addEventListener("click", () => {
+            localStorage.removeItem("jwtToken");
+        });
     });
 </script>
 

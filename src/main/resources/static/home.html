@@ -13,7 +13,7 @@
 <body class="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 min-h-screen flex items-center justify-center">
 
 <!-- Main Card -->
-<div class="bg-white shadow-2xl rounded-3xl p-10 w-full max-w-md text-center transform transition hover:scale-105">
+<div id="main-content" class="bg-white shadow-2xl rounded-3xl p-10 w-full max-w-md text-center transform transition hover:scale-105">
     <h1 class="text-4xl font-extrabold text-gray-800 mb-4">Welcome Home 🎉</h1>
     <p class="text-gray-600 mb-8 text-lg">You have successfully logged in. Enjoy exploring!</p>
 
@@ -34,6 +34,18 @@
 <footer class="absolute bottom-4 text-white text-sm opacity-80">
     © 2025 MyApp. All Rights Reserved.
 </footer>
+
+<script>
+    // Show content after JWT validation
+    document.addEventListener("DOMContentLoaded", () => {
+        const token = localStorage.getItem("jwtToken");
+        if (token) {
+            document.getElementById("main-content").style.display = "block";
+        } else {
+            window.location.href = "login.html";
+        }
+    });
+</script>
 
 </body>
 </html>
